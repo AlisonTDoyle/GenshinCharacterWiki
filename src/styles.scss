@@ -1,3 +1,20 @@
+// Site colors
+@import './assets/constants/site-colors.scss';
+
+// Update bootstrap colors
+$primary: $primary-500;
+$secondary: $secondary-500;
+
+// Modify greys
+$gray-300: $background-50;
+$gray-400: $background-400;
+$gray-500: $background-500;
+$gray-600: $background-600;
+$gray-700: $background-700;
+$gray-800: $background-900;
+$gray-900: $background-950;
+$black:    $background-950;
+
 // Import bootstrap styling
 @import "./../node_modules/bootstrap/scss/bootstrap";
 @import './../node_modules/bootstrap-icons/font/bootstrap-icons.css';
