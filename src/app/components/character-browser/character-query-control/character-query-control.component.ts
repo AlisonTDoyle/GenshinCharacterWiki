@@ -22,11 +22,7 @@ export class CharacterQueryControlComponent {
 
   // Methods
   public SearchForCharacter() {
-    this._genshinApiService.FetchAllCharacters().subscribe(
-      characterData => {
-        console.log(characterData);
-      }
-    )
+    this._genshinApiService.FetchAllCharacters()
     return false;
   }
 }

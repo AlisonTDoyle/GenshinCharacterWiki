@@ -1,25 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IMultiCharacterResponse } from '../../interfaces/multi-character';
+import { ICharacterName, IMultiCharacterResponse } from '../../interfaces/multi-character-response';
+import { ICharacterCard } from '../../interfaces/character-card';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenshinApiService {
   // Properties
-  private _apiUrl:string = "https://genshin.jmp.blue/characters";
+  private _apiUrl:string = "https://genshin.jmp.blue/characters/";
 
   // Constructor
   constructor(private _http:HttpClient) { }
 
   // Methods
-  public FetchAllCharacters():Observable<IMultiCharacterResponse> {
-    return this._http.get<IMultiCharacterResponse>(this._apiUrl)
+  public async FetchAllCharacters() {
+    this.FetchChatacterNames().subscribe((characterNames) => {
+      for (let i = 0; i < characterNames.length; i++) {
+        this.FetchCharacterCardDetails(characterNames[i]).subscribe();
+      }
+    });
+  }
+
+  public FetchChatacterNames() {
+    return this._http.get<ICharacterName[]>(this._apiUrl)
     .pipe(
-      tap((data) => console.log('Response: ', JSON.stringify(data))),
-      catchError(this.handleError)
+      // tap((data) => console.log(data))
     );
+  }
+
+  private FetchCharacterCardDetails(characterName:ICharacterName) {
+    return this._http.get<ICharacterCard>(this._apiUrl + characterName)
+    .pipe(
+      tap((data) => console.log(data)),
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error:HttpErrorResponse) {

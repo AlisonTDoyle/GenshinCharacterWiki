@@ -1,6 +1,6 @@
 export interface ICharacterCard {
-    name?:string,
-    // element:string,
-    // weapon:string
+    name:string,
+    vision:string,
+    weapon:string
     // iconURL:string
 }
